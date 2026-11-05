@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Material 3 color roles: sage + warm paper. -->
+    <color name="note_primary">#386B54</color>
+    <color name="note_on_primary">#FFFFFF</color>
+    <color name="note_primary_container">#BCF0D5</color>
+    <color name="note_on_primary_container">#002116</color>
+    <color name="note_secondary">#4F6355</color>
+    <color name="note_on_secondary">#FFFFFF</color>
+    <color name="note_secondary_container">#D2E8D6</color>
+    <color name="note_on_secondary_container">#0C1F14</color>
+    <color name="note_surface">#F7FBF4</color>
+    <color name="note_on_surface">#181D19</color>
+    <color name="note_surface_variant">#DDE5DA</color>
+    <color name="note_on_surface_variant">#414942</color>
+    <color name="note_outline">#717A71</color>
+    <color name="note_outline_variant">#C1C9BF</color>
+    <color name="note_error">#BA1A1A</color>
+    <color name="note_on_error">#FFFFFF</color>
+
+    <!-- App-specific surfaces. -->
+    <color name="note_card">#FFFFFF</color>
+    <color name="note_search_background">#FFFFFF</color>
+    <color name="note_toolbar_icon">#3E4A41</color>
+    <color name="note_navigation_bar">#234536</color>
+
+    <!-- Launcher + app widget. -->
+    <color name="ic_launcher_background">#386B54</color>
+    <color name="widget_background">#234536</color>
+    <color name="widget_text_primary">#FFFFFF</color>
+    <color name="widget_text_secondary">#C3E6D2</color>
+</resources>

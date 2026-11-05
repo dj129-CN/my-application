@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorSurface"
+            app:menu="@menu/menu_note_detail"
+            app:navigationContentDescription="@string/cd_back"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="@string/detail_title"
+            app:titleTextAppearance="@style/TextAppearance.NoteFlow.ToolbarTitle" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/detailLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                app:indicatorColor="?attr/colorPrimary" />
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/detailScroll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/screen_horizontal_padding"
+                    android:paddingTop="@dimen/space_8"
+                    android:paddingEnd="@dimen/screen_horizontal_padding"
+                    android:paddingBottom="@dimen/space_32">
+
+                    <TextView
+                        android:id="@+id/detailTitle"
+                        style="@style/TextAppearance.NoteFlow.Headline"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textIsSelectable="true"
+                        tools:text="把灵感留在当下" />
+
+                    <TextView
+                        android:id="@+id/detailCreated"
+                        style="@style/TextAppearance.NoteFlow.Caption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_12"
+                        tools:text="创建于 2026年11月5日 21:40" />
+
+                    <TextView
+                        android:id="@+id/detailUpdated"
+                        style="@style/TextAppearance.NoteFlow.Caption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_4"
+                        tools:text="更新于 2026年11月5日 21:40" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_24"
+                        app:cardBackgroundColor="@color/note_card"
+                        app:cardCornerRadius="@dimen/radius_large"
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/note_outline_variant"
+                        app:strokeWidth="1dp">
+
+                        <TextView
+                            android:id="@+id/detailContent"
+                            style="@style/TextAppearance.NoteFlow.Body"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="160dp"
+                            android:padding="@dimen/space_20"
+                            android:textIsSelectable="true"
+                            tools:text="记录今天读到的一句话，以及它为什么打动我。&#10;&#10;也许灵感并不需要宏大，它只需要被认真地保存下来。" />
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <LinearLayout
+                android:id="@+id/missingState"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/space_32"
+                android:visibility="gone">
+
+                <FrameLayout
+                    android:layout_width="76dp"
+                    android:layout_height="76dp"
+                    android:background="@drawable/bg_empty_icon">
+
+                    <ImageView
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/cd_note"
+                        android:src="@drawable/ic_note" />
+                </FrameLayout>
+
+                <TextView
+                    style="@style/TextAppearance.NoteFlow.Headline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_20"
+                    android:gravity="center"
+                    android:text="@string/detail_missing_title" />
+
+                <TextView
+                    style="@style/TextAppearance.NoteFlow.Caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:gravity="center"
+                    android:text="@string/detail_missing_message"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Navigation-bar icon appearance is only available from API 27. -->
+    <style name="Theme.NoteFlow" parent="Theme.NoteFlow.Base">
+        <item name="android:navigationBarColor">@color/note_surface</item>
+        <item name="android:windowLightNavigationBar">@bool/light_system_bars</item>
+    </style>
+</resources>

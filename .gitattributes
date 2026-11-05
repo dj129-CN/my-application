@@ -1,0 +1,17 @@
+# Normalize source files to LF in the repository.
+* text=auto eol=lf
+
+# Windows entry points must keep CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Gradle wrapper scripts.
+gradlew text eol=lf
+gradle/wrapper/gradle-wrapper.jar binary
+
+# Binary assets.
+*.png binary
+*.webp binary
+*.jar binary
+*.keystore binary

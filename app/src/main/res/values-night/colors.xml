@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="note_primary">#A1D3B6</color>
+    <color name="note_on_primary">#003824</color>
+    <color name="note_primary_container">#1F523C</color>
+    <color name="note_on_primary_container">#BCF0D5</color>
+    <color name="note_secondary">#B6CCBC</color>
+    <color name="note_on_secondary">#223529</color>
+    <color name="note_secondary_container">#384B3F</color>
+    <color name="note_on_secondary_container">#D2E8D6</color>
+    <color name="note_surface">#101511</color>
+    <color name="note_on_surface">#DFE4DD</color>
+    <color name="note_surface_variant">#414942</color>
+    <color name="note_on_surface_variant">#C1C9BF</color>
+    <color name="note_outline">#8B948A</color>
+    <color name="note_outline_variant">#414942</color>
+    <color name="note_error">#FFB4AB</color>
+    <color name="note_on_error">#690005</color>
+
+    <color name="note_card">#1A201B</color>
+    <color name="note_search_background">#1A201B</color>
+    <color name="note_toolbar_icon">#C1C9BF</color>
+    <color name="note_navigation_bar">#101511</color>
+
+    <color name="ic_launcher_background">#1F523C</color>
+    <color name="widget_background">#1F523C</color>
+    <color name="widget_text_primary">#D9F7E5</color>
+    <color name="widget_text_secondary">#A1D3B6</color>
+</resources>

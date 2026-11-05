@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/noteListFragment">
+
+    <fragment
+        android:id="@+id/noteListFragment"
+        android:name="com.example.noteflow.ui.notes.NoteListFragment"
+        android:label="@string/note_list_title">
+        <action
+            android:id="@+id/action_noteList_to_noteDetail"
+            app:destination="@id/noteDetailFragment" />
+        <action
+            android:id="@+id/action_noteList_to_noteEdit"
+            app:destination="@id/noteEditFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/noteDetailFragment"
+        android:name="com.example.noteflow.ui.detail.NoteDetailFragment"
+        android:label="@string/detail_title">
+        <argument
+            android:name="noteId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_noteDetail_to_noteEdit"
+            app:destination="@id/noteEditFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/noteEditFragment"
+        android:name="com.example.noteflow.ui.edit.NoteEditFragment"
+        android:label="@string/edit_title_new">
+        <argument
+            android:name="noteId"
+            app:argType="long" />
+    </fragment>
+
+</navigation>

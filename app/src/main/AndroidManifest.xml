@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Signature permission for external clients of the note ContentProvider. -->
+    <permission
+        android:name="${applicationId}.permission.ACCESS_NOTES"
+        android:protectionLevel="signature" />
+
+    <application
+        android:name=".NoteFlowApp"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.NoteFlow">
+
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--
+            Binder-backed ContentProvider. It may be queried from another process
+            or another app signed with the same certificate. The provider runs in
+            the default app process and shares the Room singleton with the UI.
+        -->
+        <provider
+            android:name=".provider.NoteContentProvider"
+            android:authorities="${applicationId}.provider"
+            android:enabled="true"
+            android:exported="true"
+            android:grantUriPermissions="false"
+            android:label="@string/provider_label"
+            android:permission="${applicationId}.permission.ACCESS_NOTES" />
+
+        <!-- Home-screen app widget. The receiver is only targeted by the system. -->
+        <receiver
+            android:name=".widget.NoteWidgetProvider"
+            android:exported="false"
+            android:label="@string/widget_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/note_widget_info" />
+        </receiver>
+    </application>
+
+</manifest>

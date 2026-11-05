@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Single source of truth for the visual foundation. Color values are
+        swapped by values-night automatically; Material 3 components consume
+        these roles instead of screen-level hard-coded colors.
+    -->
+    <style name="Theme.NoteFlow.Base" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/note_primary</item>
+        <item name="colorOnPrimary">@color/note_on_primary</item>
+        <item name="colorPrimaryContainer">@color/note_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/note_on_primary_container</item>
+        <item name="colorSecondary">@color/note_secondary</item>
+        <item name="colorOnSecondary">@color/note_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/note_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/note_on_secondary_container</item>
+        <item name="colorSurface">@color/note_surface</item>
+        <item name="colorOnSurface">@color/note_on_surface</item>
+        <item name="colorSurfaceVariant">@color/note_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/note_on_surface_variant</item>
+        <item name="colorOutline">@color/note_outline</item>
+        <item name="colorError">@color/note_error</item>
+        <item name="colorOnError">@color/note_on_error</item>
+
+        <item name="android:colorBackground">@color/note_surface</item>
+        <item name="android:windowBackground">@color/note_surface</item>
+        <item name="android:statusBarColor">@color/note_surface</item>
+        <item name="android:navigationBarColor">@color/note_navigation_bar</item>
+        <item name="android:windowLightStatusBar">@bool/light_system_bars</item>
+        <item name="android:windowActionModeOverlay">true</item>
+    </style>
+
+    <style name="Theme.NoteFlow" parent="Theme.NoteFlow.Base" />
+
+    <style name="TextAppearance.NoteFlow.ToolbarTitle" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.NoteFlow.Headline" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.NoteFlow.SectionTitle" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.NoteFlow.Body" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:lineSpacingExtra">6dp</item>
+    </style>
+
+    <style name="TextAppearance.NoteFlow.Caption" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+    </style>
+</resources>
