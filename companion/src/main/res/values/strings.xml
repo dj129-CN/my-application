@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="companion_app_name">拾光贴士</string>
+    <string name="companion_eyebrow">桌面小组件生态 · P1 伴生模块</string>
+    <string name="companion_hero_title">把灵感入口留在桌面</string>
+    <string name="companion_hero_detail">拾光笔记的独立桌面伴生应用。主应用在时联动笔记，主应用不在时也能作为灵感贴独立运行。</string>
+    <string name="companion_status_checking">正在检测拾光笔记…</string>
+    <string name="companion_status_checking_detail">正在确认主应用与数据授权状态。</string>
+    <string name="companion_status_connected">已连接拾光笔记</string>
+    <string name="companion_status_connected_detail">桌面贴士会跟随主应用笔记变化自动刷新。</string>
+    <string name="companion_status_local">独立运行中</string>
+    <string name="companion_status_local_detail">未检测到可用的拾光笔记，或两个应用签名不一致。桌面灵感贴仍可独立使用。</string>
+    <string name="companion_latest_label">最近一条笔记</string>
+    <string name="companion_no_notes_title">主应用里还没有笔记</string>
+    <string name="companion_no_notes_detail">打开拾光笔记写下第一条，伴生微件会自动更新。</string>
+    <string name="companion_no_content">暂无正文</string>
+    <string name="companion_local_tip_label">独立模式</string>
+    <string name="companion_local_tip_title">今天也值得记录</string>
+    <string name="companion_local_tip_detail">按自己的节奏使用桌面灵感贴；安装主应用并保持同一签名后，即可解锁笔记联动。</string>
+    <string name="companion_open_main">打开拾光笔记</string>
+    <string name="companion_refresh_widget">刷新桌面组件</string>
+    <string name="companion_widget_refreshed">桌面组件已刷新</string>
+    <string name="companion_main_unavailable">未找到可用的拾光笔记，请先安装主应用并保持同一签名</string>
+    <string name="companion_independence_title">为什么它是伴生模块</string>
+    <string name="companion_independence_body">• 独立应用：拥有自己的包名、启动入口、主题和桌面微件。\n• 独立构建：不依赖 :app 的编译产物，只通过 ContentProvider、URI 深链和受签名保护的广播协作。\n• 独立降级：主应用未安装或签名不匹配时，仍可显示本地灵感内容并正常打开。\n• 可单独卸载：移除任一应用，另一个都能继续运行。</string>
+    <string name="companion_footer">主应用与伴生模块需使用同一签名证书，才能启用跨应用数据与联动刷新。</string>
+
+    <string name="companion_widget_name">拾光贴士 · 灵感微件</string>
+    <string name="companion_widget_description">展示每日灵感或主应用最近笔记，并支持快速记录与深度跳转</string>
+    <string name="companion_widget_header">拾光贴士</string>
+    <string name="companion_widget_badge">P1</string>
+    <string name="companion_widget_local_title">独立模式 · 今日灵感</string>
+    <string name="companion_widget_connected_title">今天想记录什么？</string>
+    <string name="companion_widget_empty_content">先留一点空白，再写下一句今天想记住的话。</string>
+    <string name="companion_widget_no_content">暂无正文</string>
+    <string name="companion_widget_quick_add">＋ 快速记录</string>
+    <string name="companion_widget_open_notes">查看笔记</string>
+    <string name="companion_widget_open_companion">打开伴生</string>
+    <string name="companion_widget_connected_footer">已连接拾光笔记 · 数据自动联动</string>
+    <string name="companion_widget_local_footer">未连接主应用 · 伴生微件独立运行</string>
+
+    <string-array name="companion_prompts">
+        <item>今天有什么小事值得被记住？</item>
+        <item>把刚刚闪过的一句话留下来。</item>
+        <item>如果只记录一个瞬间，你会选什么？</item>
+        <item>给未来的自己留一句提示。</item>
+        <item>今天的心情，用三句话描述。</item>
+    </string-array>
+</resources>

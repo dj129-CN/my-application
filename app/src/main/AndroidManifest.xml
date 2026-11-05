@@ -6,6 +6,17 @@
         android:name="${applicationId}.permission.ACCESS_NOTES"
         android:protectionLevel="signature" />
 
+    <!--
+        The companion app declares this in its own manifest as a receiver guard.
+        The main app declares it too so the permission exists before the
+        companion is installed, and so the broadcast sender holds the grant.
+    -->
+    <permission
+        android:name="com.example.noteflow.companion.permission.REFRESH_WIDGET"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.example.noteflow.companion.permission.REFRESH_WIDGET" />
+
     <application
         android:name=".NoteFlowApp"
         android:allowBackup="true"
@@ -20,10 +31,21 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
+            android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- noteflow://open/notes, /note/{id}, /editor?noteId={id} -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="open"
+                    android:scheme="noteflow" />
             </intent-filter>
         </activity>
 

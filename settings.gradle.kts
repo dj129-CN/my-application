@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "NoteFlow"
 include(":app")
+include(":companion")

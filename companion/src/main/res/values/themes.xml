@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.NoteFlowCompanion" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/companion_primary</item>
+        <item name="colorOnPrimary">@color/companion_on_primary</item>
+        <item name="colorPrimaryContainer">@color/companion_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/companion_on_primary_container</item>
+        <item name="colorSecondary">@color/companion_secondary</item>
+        <item name="colorOnSecondary">@color/companion_on_secondary</item>
+        <item name="colorSurface">@color/companion_surface</item>
+        <item name="colorOnSurface">@color/companion_on_surface</item>
+        <item name="colorSurfaceVariant">@color/companion_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/companion_on_surface_variant</item>
+        <item name="colorOutline">@color/companion_outline</item>
+        <item name="colorError">@color/companion_error</item>
+        <item name="colorOnError">@color/companion_on_error</item>
+
+        <item name="android:colorBackground">@color/companion_surface</item>
+        <item name="android:windowBackground">@color/companion_surface</item>
+        <item name="android:statusBarColor">@color/companion_surface</item>
+        <item name="android:navigationBarColor">@color/companion_navigation_bar</item>
+        <item name="android:windowLightStatusBar">@bool/companion_light_system_bars</item>
+    </style>
+</resources>

@@ -29,4 +29,15 @@
     <color name="widget_background">#234536</color>
     <color name="widget_text_primary">#FFFFFF</color>
     <color name="widget_text_secondary">#C3E6D2</color>
+
+    <!-- Widget palette rendered explicitly so it follows the in-app theme choice. -->
+    <color name="widget_light_surface">#FFFBF2</color>
+    <color name="widget_light_text_primary">#1C3326</color>
+    <color name="widget_light_text_secondary">#586B5E</color>
+    <color name="widget_light_accent">#2E6B50</color>
+
+    <color name="widget_dark_surface">#1B3A2B</color>
+    <color name="widget_dark_text_primary">#F7FBF4</color>
+    <color name="widget_dark_text_secondary">#C3E6D2</color>
+    <color name="widget_dark_accent">#A1D3B6</color>
 </resources>

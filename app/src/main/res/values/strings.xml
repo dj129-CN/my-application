@@ -12,12 +12,18 @@
     <string name="edit_title_edit">编辑笔记</string>
 
     <string name="action_sync">同步</string>
+    <string name="action_theme">主题</string>
     <string name="action_edit">编辑</string>
     <string name="action_delete">删除</string>
     <string name="action_save">保存笔记</string>
     <string name="action_new_note">新建笔记</string>
     <string name="action_cancel">取消</string>
     <string name="action_confirm_delete">删除</string>
+
+    <string name="theme_dialog_title">选择主题</string>
+    <string name="theme_system">跟随系统</string>
+    <string name="theme_light">浅色</string>
+    <string name="theme_dark">深色</string>
 
     <string name="search_hint">搜索标题或正文</string>
     <string name="list_empty_title">还没有笔记</string>
@@ -53,6 +59,8 @@
     <string name="widget_empty_content">点击打开，记录第一条灵感</string>
     <string name="widget_updated">更新于 %1$s</string>
     <string name="widget_open_hint">轻触打开拾光笔记</string>
+    <string name="widget_quick_add">＋ 快速记录</string>
+    <string name="widget_open_all">查看全部 →</string>
 
     <string name="cd_back">返回</string>
     <string name="cd_note">笔记图标</string>

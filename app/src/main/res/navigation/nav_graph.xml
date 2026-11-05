@@ -8,6 +8,7 @@
         android:id="@+id/noteListFragment"
         android:name="com.example.noteflow.ui.notes.NoteListFragment"
         android:label="@string/note_list_title">
+        <deepLink app:uri="noteflow://open/notes" />
         <action
             android:id="@+id/action_noteList_to_noteDetail"
             app:destination="@id/noteDetailFragment" />
@@ -23,6 +24,7 @@
         <argument
             android:name="noteId"
             app:argType="long" />
+        <deepLink app:uri="noteflow://open/note/{noteId}" />
         <action
             android:id="@+id/action_noteDetail_to_noteEdit"
             app:destination="@id/noteEditFragment" />
@@ -35,6 +37,7 @@
         <argument
             android:name="noteId"
             app:argType="long" />
+        <deepLink app:uri="noteflow://open/editor?noteId={noteId}" />
     </fragment>
 
 </navigation>

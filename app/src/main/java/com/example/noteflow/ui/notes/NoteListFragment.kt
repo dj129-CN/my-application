@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
@@ -22,6 +23,10 @@ import com.example.noteflow.ui.common.appContainer
 import com.example.noteflow.ui.detail.NoteDetailFragment
 import com.example.noteflow.ui.edit.NoteEditFragment
 import com.example.noteflow.util.DateFormats
+import com.example.noteflow.util.ThemeMode
+import com.example.noteflow.util.ThemePreferences
+import com.example.noteflow.widget.NoteWidgetUpdater
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
@@ -57,6 +62,10 @@ class NoteListFragment : Fragment() {
 
         binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
+                R.id.action_theme -> {
+                    showThemeChooser()
+                    true
+                }
                 R.id.action_sync -> {
                     viewModel.requestSync()
                     true
@@ -150,6 +159,35 @@ class NoteListFragment : Fragment() {
             R.id.action_noteList_to_noteDetail,
             bundleOf(NoteDetailFragment.ARG_NOTE_ID to noteId),
         )
+    }
+
+    private fun showThemeChooser() {
+        val preferences = ThemePreferences(requireContext())
+        val modes = ThemeMode.values()
+        val labels = modes.map { mode ->
+            getString(
+                when (mode) {
+                    ThemeMode.SYSTEM -> R.string.theme_system
+                    ThemeMode.LIGHT -> R.string.theme_light
+                    ThemeMode.DARK -> R.string.theme_dark
+                },
+            )
+        }.toTypedArray()
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.theme_dialog_title)
+            .setSingleChoiceItems(
+                labels,
+                modes.indexOf(preferences.mode),
+            ) { dialog, selectedIndex ->
+                val selectedMode = modes[selectedIndex]
+                preferences.mode = selectedMode
+                AppCompatDelegate.setDefaultNightMode(selectedMode.nightMode)
+                NoteWidgetUpdater.requestUpdate(requireContext())
+                dialog.dismiss()
+            }
+            .setNegativeButton(R.string.action_cancel, null)
+            .show()
     }
 
     private fun openNoteEditor(noteId: Long) {

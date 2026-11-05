@@ -11,6 +11,7 @@ import android.net.Uri
 import android.provider.BaseColumns
 import com.example.noteflow.data.local.AppDatabase
 import com.example.noteflow.data.local.NoteEntity
+import com.example.noteflow.widget.CompanionBridge
 import com.example.noteflow.widget.NoteWidgetUpdater
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -174,6 +175,7 @@ class NoteContentProvider : ContentProvider() {
             resolver.notifyChange(changedUri, null)
         }
         NoteWidgetUpdater.requestUpdate(contextOrThrow())
+        CompanionBridge.notifyNotesChanged(contextOrThrow())
     }
 
     private fun requireMatch(uri: Uri, expectedMatch: Int) {

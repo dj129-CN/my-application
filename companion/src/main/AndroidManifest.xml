@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Matches the main app's provider permission for the active build type. -->
+    <uses-permission android:name="${mainProviderPermission}" />
+    <uses-permission android:name="com.example.noteflow.companion.permission.REFRESH_WIDGET" />
+
+    <!-- Package visibility for optional runtime integration on Android 11+. -->
+    <queries>
+        <package android:name="com.example.noteflow" />
+        <package android:name="com.example.noteflow.debug" />
+    </queries>
+
+    <application
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_companion_launcher"
+        android:label="@string/companion_app_name"
+        android:roundIcon="@mipmap/ic_companion_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.NoteFlowCompanion">
+
+        <activity
+            android:name=".CompanionActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".widget.CompanionWidgetProvider"
+            android:exported="false"
+            android:label="@string/companion_widget_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/companion_widget_info" />
+        </receiver>
+
+        <!-- Main app writes trigger a signature-protected refresh broadcast. -->
+        <receiver
+            android:name=".widget.CompanionRefreshReceiver"
+            android:exported="true"
+            android:permission="com.example.noteflow.companion.permission.REFRESH_WIDGET">
+            <intent-filter>
+                <action android:name="com.example.noteflow.companion.action.REFRESH_WIDGET" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
