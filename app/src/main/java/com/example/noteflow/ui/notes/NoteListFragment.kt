@@ -60,6 +60,10 @@ class NoteListFragment : Fragment() {
         binding.noteList.adapter = noteAdapter
         binding.noteList.setHasFixedSize(true)
 
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
         binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_theme -> {

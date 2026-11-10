@@ -28,7 +28,7 @@
 - 笔记新增、查看、编辑、删除、标题/正文搜索
 - Room 持久化 + Flow 响应式列表
 - MVVM：StateFlow 页面状态 + LiveData 一次性事件
-- Navigation 单 Activity 三页面导航
+- Navigation 单 Activity 多 Fragment 导航（待办 3 页 + 原有笔记 3 页）
 - Material 3 日夜主题
 - **必做：主屏微件动态刷新**（写入即更新 + WorkManager 周期兜底 + 系统周期更新）
 - **必做：微件深度跳转联动**（列表、最近笔记详情、新建笔记、查看全部使用不同深链）
@@ -47,7 +47,7 @@
 - 主应用缺失、签名不一致或 Provider 不可用时自动降级，不崩溃
 - 独立安装、独立构建、独立卸载；不依赖 `:app` 编译产物
 
-### 待办数据层（`:app`，本阶段新增）
+### 待办数据层（`:app`）
 
 - `TodoEntity`：id、标题、内容、创建时间、完成状态、优先级
 - `TodoDao`：新增/批量新增、更新、状态更新、优先级更新、删除、按状态/优先级/时间/关键字查询、计数
@@ -55,6 +55,16 @@
 - `TodoRepository`：所有数据库访问在 `Dispatchers.IO` 中执行；一次性操作为 `suspend`，监听查询为 `Flow`
 - `DataResult<T>`：统一封装成功/失败，包含校验失败、未找到、数据库异常，并处理空值
 - 详细说明：[docs/TODO_DATA_LAYER.md](docs/TODO_DATA_LAYER.md)
+
+### 待办 UI 空壳（`:app`，本阶段新增）
+
+- 单 Activity + Navigation：待办列表、新增/编辑、设置三个核心页面
+- 列表页：RecyclerView、悬浮新建按钮、空态占位、完成状态切换
+- 编辑页：标题/备注表单、保存/取消、`todoId` 导航参数传递
+- 设置页：主题切换入口、桌面小组件配置说明、刷新微件、返回原有笔记模块
+- 待办数据仅存放在 Activity 级 ViewModel 内存中，不接入 Room，重启后清空
+- 应用默认进入待办列表；原有笔记、微件、深链功能保留
+- 详细说明：[docs/TODO_UI_SHELL.md](docs/TODO_UI_SHELL.md)
 
 ## 深度链接
 
@@ -183,7 +193,7 @@ Gradle Wrapper 默认使用腾讯镜像下载官方 Gradle 8.7，并用官方 SH
 │       │   ├── provider/               # ContentProvider + Contract
 │       │   ├── widget/                 # 主微件、主题化 RemoteViews、伴生广播桥
 │       │   ├── util/                   # 日期、Event、深链、主题偏好、DataResult
-│       │   └── ui/                     # 列表、详情、编辑、ViewModel
+│       │   └── ui/                     # 待办三页、笔记三页与 ViewModel
 │       └── res/                        # 布局、导航、主题、微件、图标
 ├── companion/                          # 独立伴生应用模块
 │   ├── build.gradle.kts
@@ -196,7 +206,8 @@ Gradle Wrapper 默认使用腾讯镜像下载官方 Gradle 8.7，并用官方 SH
 │       └── res/                        # 独立主题、布局、微件、图标
 ├── docs/
 │   ├── TOPIC_REVIEW.md                 # C6 + P1 选题审核材料
-│   └── TODO_DATA_LAYER.md              # 待办数据层说明
+│   ├── TODO_DATA_LAYER.md              # 待办数据层说明
+│   └── TODO_UI_SHELL.md                # 待办 UI 与导航说明
 ├── gradle/libs.versions.toml           # 统一版本目录
 ├── gradle/wrapper/
 ├── build.gradle.kts
@@ -222,7 +233,7 @@ Gradle Wrapper 默认使用腾讯镜像下载官方 Gradle 8.7，并用官方 SH
 ```text
 :app:assembleDebug            BUILD SUCCESSFUL
 :companion:assembleDebug      BUILD SUCCESSFUL
-:app:testDebugUnitTest        6 tests, 0 failures
+:app:testDebugUnitTest        9 tests, 0 failures
 :app:lintDebug                No issues found
 :companion:lintDebug          No issues found
 ```

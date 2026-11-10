@@ -16,6 +16,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorSurface"
             app:menu="@menu/menu_note_list"
+            app:navigationContentDescription="@string/cd_back"
+            app:navigationIcon="@drawable/ic_arrow_back"
             app:subtitleTextColor="?attr/colorOnSurfaceVariant"
             app:title="@string/app_name"
             app:titleTextAppearance="@style/TextAppearance.NoteFlow.ToolbarTitle" />

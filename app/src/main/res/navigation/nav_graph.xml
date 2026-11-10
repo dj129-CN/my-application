@@ -2,7 +2,37 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/noteListFragment">
+    app:startDestination="@id/todoListFragment">
+
+    <fragment
+        android:id="@+id/todoListFragment"
+        android:name="com.example.noteflow.ui.todo.TodoListFragment"
+        android:label="@string/todo_list_title">
+        <action
+            android:id="@+id/action_todoList_to_todoEdit"
+            app:destination="@id/todoEditFragment" />
+        <action
+            android:id="@+id/action_todoList_to_todoSettings"
+            app:destination="@id/todoSettingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/todoEditFragment"
+        android:name="com.example.noteflow.ui.todo.TodoEditFragment"
+        android:label="@string/todo_edit_title_new">
+        <argument
+            android:name="todoId"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/todoSettingsFragment"
+        android:name="com.example.noteflow.ui.todo.TodoSettingsFragment"
+        android:label="@string/todo_settings_title">
+        <action
+            android:id="@+id/action_todoSettings_to_noteList"
+            app:destination="@id/noteListFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/noteListFragment"
