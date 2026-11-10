@@ -5,6 +5,7 @@ import com.example.noteflow.data.local.AppDatabase
 import com.example.noteflow.data.work.NoteSyncScheduler
 import com.example.noteflow.provider.NoteContract
 import com.example.noteflow.repository.NoteRepository
+import com.example.noteflow.repository.TodoRepository
 import com.example.noteflow.widget.CompanionBridge
 import com.example.noteflow.widget.NoteWidgetUpdater
 
@@ -26,5 +27,9 @@ class AppContainer(context: Context) {
             CompanionBridge.notifyNotesChanged(appContext)
             appContext.contentResolver.notifyChange(NoteContract.CONTENT_URI, null)
         }
+    }
+
+    val todoRepository: TodoRepository by lazy {
+        TodoRepository(database.todoDao())
     }
 }

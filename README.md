@@ -47,6 +47,15 @@
 - 主应用缺失、签名不一致或 Provider 不可用时自动降级，不崩溃
 - 独立安装、独立构建、独立卸载；不依赖 `:app` 编译产物
 
+### 待办数据层（`:app`，本阶段新增）
+
+- `TodoEntity`：id、标题、内容、创建时间、完成状态、优先级
+- `TodoDao`：新增/批量新增、更新、状态更新、优先级更新、删除、按状态/优先级/时间/关键字查询、计数
+- Room 数据库升级到 v2：新增 `todos` 表、三个索引，并提供 `MIGRATION_1_2` 保留原笔记数据
+- `TodoRepository`：所有数据库访问在 `Dispatchers.IO` 中执行；一次性操作为 `suspend`，监听查询为 `Flow`
+- `DataResult<T>`：统一封装成功/失败，包含校验失败、未找到、数据库异常，并处理空值
+- 详细说明：[docs/TODO_DATA_LAYER.md](docs/TODO_DATA_LAYER.md)
+
 ## 深度链接
 
 主应用 Manifest 注册 `noteflow://open`，`MainActivity` 使用 `singleTop` 接收冷启动/热启动 Intent，再交给 `NavController.handleDeepLink()`。
@@ -161,18 +170,19 @@ Gradle Wrapper 默认使用腾讯镜像下载官方 Gradle 8.7，并用官方 SH
 .
 ├── app/                                # 主应用模块
 │   ├── build.gradle.kts
-│   ├── schemas/                        # Room schema 导出
+│   ├── schemas/                        # Room schema 导出（v1/v2）
 │   └── src/main/
 │       ├── AndroidManifest.xml         # 主应用、Provider、微件、深链、权限
 │       ├── java/com/example/noteflow/
 │       │   ├── NoteFlowApp.kt
 │       │   ├── AppContainer.kt
-│       │   ├── data/local/             # Room、DAO、Entity、同步偏好
+│       │   ├── data/local/             # Room、Note/Todo DAO、实体、类型转换、同步偏好
 │       │   ├── data/work/              # WorkManager 调度与 Worker
-│       │   ├── repository/
+│       │   ├── data/model/             # TodoPriority 等领域模型
+│       │   ├── repository/             # NoteRepository、TodoRepository
 │       │   ├── provider/               # ContentProvider + Contract
 │       │   ├── widget/                 # 主微件、主题化 RemoteViews、伴生广播桥
-│       │   ├── util/                   # 日期、Event、深链、主题偏好
+│       │   ├── util/                   # 日期、Event、深链、主题偏好、DataResult
 │       │   └── ui/                     # 列表、详情、编辑、ViewModel
 │       └── res/                        # 布局、导航、主题、微件、图标
 ├── companion/                          # 独立伴生应用模块
@@ -184,7 +194,9 @@ Gradle Wrapper 默认使用腾讯镜像下载官方 Gradle 8.7，并用官方 SH
 │       │   ├── data/CompanionProviderClient.kt
 │       │   └── widget/                 # 独立微件、刷新接收器
 │       └── res/                        # 独立主题、布局、微件、图标
-├── docs/TOPIC_REVIEW.md                # C6 + P1 选题审核材料
+├── docs/
+│   ├── TOPIC_REVIEW.md                 # C6 + P1 选题审核材料
+│   └── TODO_DATA_LAYER.md              # 待办数据层说明
 ├── gradle/libs.versions.toml           # 统一版本目录
 ├── gradle/wrapper/
 ├── build.gradle.kts
@@ -210,10 +222,12 @@ Gradle Wrapper 默认使用腾讯镜像下载官方 Gradle 8.7，并用官方 SH
 ```text
 :app:assembleDebug            BUILD SUCCESSFUL
 :companion:assembleDebug      BUILD SUCCESSFUL
-:app:testDebugUnitTest        2 tests, 0 failures
+:app:testDebugUnitTest        6 tests, 0 failures
 :app:lintDebug                No issues found
 :companion:lintDebug          No issues found
 ```
+
+Room schema 当前为 v2，`todos` 表和 `notes` 表会随 `app/schemas/` 一起提交。
 
 两个 Debug APK 使用同一调试证书签名，满足签名级 Provider 与广播联动的安装前提。
 
