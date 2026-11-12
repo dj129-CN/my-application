@@ -67,7 +67,7 @@
 - `CancellationException` 会继续向上抛出，不会被结果封装吞掉。
 - 单条查询找不到时返回 `NOT_FOUND`；列表为空时返回成功的空列表。
 - `observeById` 保留可空发射，因为删除/重新创建过程中单条 Flow 的 `null` 是正常状态；一次性 `getById` 则返回 `NOT_FOUND`。
-- Repository 已经接入 `AppContainer.todoRepository`，后续添加 ViewModel 时可直接注入。
+- Repository 已接入 `AppContainer.todoRepository`，并由 `TodoListViewModel` / `TodoEditViewModel` 使用。
 
 ## 4. 统一结果封装
 

@@ -1,69 +1,122 @@
 package com.example.noteflow.ui.todo
 
+import android.util.Log
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.noteflow.R
+import com.example.noteflow.data.local.TodoEntity
+import com.example.noteflow.repository.TodoRepository
+import com.example.noteflow.util.DataResult
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-/**
- * In-memory demo state for the UI shell. It deliberately does not touch Room or
- * TodoRepository: this stage only verifies navigation, forms and list rendering.
- * The ViewModel is activity-scoped so the list and editor share the same items.
- */
-data class TodoDemoItem(
-    val id: Long,
-    val title: String,
-    val content: String = "",
-    val isCompleted: Boolean = false,
+data class TodoListUiState(
+    val todos: List<TodoEntity> = emptyList(),
+    val isLoading: Boolean = true,
 )
 
-class TodoListViewModel : ViewModel() {
+sealed interface TodoListEvent {
+    data class ShowToast(@StringRes val messageRes: Int) : TodoListEvent
+}
 
-    private val _todos = MutableStateFlow<List<TodoDemoItem>>(emptyList())
-    val todos: StateFlow<List<TodoDemoItem>> = _todos.asStateFlow()
+/**
+ * Room is the single source of truth: the list observes the repository Flow,
+ * while mutations go through the same repository and re-emit automatically.
+ */
+class TodoListViewModel(
+    private val todoRepository: TodoRepository,
+) : ViewModel() {
 
-    private var nextId = 1L
+    private val _uiState = MutableStateFlow(TodoListUiState())
+    val uiState: StateFlow<TodoListUiState> = _uiState.asStateFlow()
 
-    fun findItem(id: Long): TodoDemoItem? =
-        _todos.value.firstOrNull { it.id == id }
+    private val _events = Channel<TodoListEvent>(Channel.BUFFERED)
+    val events = _events.receiveAsFlow()
 
-    fun saveTodo(id: Long, title: String, content: String): Long {
-        val normalizedTitle = title.trim()
-        require(normalizedTitle.isNotEmpty()) { "Todo title must not be blank" }
-        val normalizedContent = content.trim()
-
-        if (id > 0L) {
-            require(_todos.value.any { it.id == id }) { "Demo todo $id does not exist" }
-            _todos.update { current ->
-                current.map { item ->
-                    if (item.id == id) {
-                        item.copy(
-                            title = normalizedTitle,
-                            content = normalizedContent,
-                        )
-                    } else {
-                        item
+    init {
+        viewModelScope.launch {
+            todoRepository.observeTodosNewestFirst().collect { result ->
+                when (result) {
+                    is DataResult.Success -> {
+                        _uiState.update {
+                            it.copy(todos = result.data, isLoading = false)
+                        }
+                    }
+                    is DataResult.Failure -> {
+                        Log.e(TAG, "Unable to observe todos", result.cause)
+                        _uiState.update { it.copy(isLoading = false) }
+                        _events.send(TodoListEvent.ShowToast(R.string.todo_operation_failed))
                     }
                 }
             }
-            return id
         }
-
-        val item = TodoDemoItem(
-            id = nextId++,
-            title = normalizedTitle,
-            content = normalizedContent,
-        )
-        _todos.update { listOf(item) + it }
-        return item.id
     }
 
-    fun setCompleted(id: Long, completed: Boolean) {
-        _todos.update { current ->
-            current.map { item ->
-                if (item.id == id) item.copy(isCompleted = completed) else item
+    fun setCompleted(todo: TodoEntity, completed: Boolean) {
+        if (todo.isCompleted == completed) return
+
+        // Keep the checkbox responsive; Room will confirm the change with a new
+        // list emission. On failure, restore the previous visual state.
+        val previous = todo.isCompleted
+        _uiState.update { state ->
+            state.copy(
+                todos = state.todos.map {
+                    if (it.id == todo.id) it.copy(isCompleted = completed) else it
+                },
+            )
+        }
+
+        viewModelScope.launch {
+            when (val result = todoRepository.updateCompletion(todo.id, completed)) {
+                is DataResult.Success -> {
+                    _events.send(
+                        TodoListEvent.ShowToast(
+                            if (completed) R.string.todo_completed else R.string.todo_reopened,
+                        ),
+                    )
+                }
+                is DataResult.Failure -> {
+                    Log.e(TAG, "Unable to update todo completion", result.cause)
+                    _uiState.update { state ->
+                        state.copy(
+                            todos = state.todos.map {
+                                if (it.id == todo.id) it.copy(isCompleted = previous) else it
+                            },
+                        )
+                    }
+                    _events.send(TodoListEvent.ShowToast(R.string.todo_operation_failed))
+                }
             }
+        }
+    }
+
+    fun delete(todo: TodoEntity) {
+        viewModelScope.launch {
+            when (val result = todoRepository.delete(todo)) {
+                is DataResult.Success -> {
+                    _events.send(TodoListEvent.ShowToast(R.string.todo_deleted))
+                }
+                is DataResult.Failure -> {
+                    Log.e(TAG, "Unable to delete todo", result.cause)
+                    _events.send(TodoListEvent.ShowToast(R.string.todo_operation_failed))
+                }
+            }
+        }
+    }
+
+    companion object {
+        private const val TAG = "TodoListViewModel"
+
+        fun factory(todoRepository: TodoRepository) = viewModelFactory {
+            initializer { TodoListViewModel(todoRepository) }
         }
     }
 }

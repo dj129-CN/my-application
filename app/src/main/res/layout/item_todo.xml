@@ -6,10 +6,12 @@
     android:layout_marginBottom="12dp"
     android:clickable="true"
     android:focusable="true"
+    android:longClickable="true"
     android:minHeight="76dp"
     app:cardBackgroundColor="?attr/colorSurface"
     app:cardCornerRadius="16dp"
     app:cardElevation="0dp"
+    app:rippleColor="?attr/colorPrimary"
     app:strokeColor="?attr/colorOutline"
     app:strokeWidth="1dp">
 

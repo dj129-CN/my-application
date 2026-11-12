@@ -63,7 +63,7 @@
     <string name="widget_open_all">查看全部 →</string>
 
     <string name="todo_list_title">待办清单</string>
-    <string name="todo_list_subtitle_format">内存演示 · %1$d 项</string>
+    <string name="todo_list_subtitle_format">本地待办 · %1$d 项</string>
     <string name="todo_action_settings">设置</string>
     <string name="todo_fab_add">新建待办</string>
     <string name="todo_empty_title">还没有待办</string>
@@ -77,23 +77,31 @@
     <string name="todo_edit_hint_title">待办标题</string>
     <string name="todo_edit_hint_content">备注（可选）</string>
     <string name="todo_edit_title_required">请输入待办标题</string>
-    <string name="todo_edit_demo_hint">当前为 UI 演示 · todoId=%1$d · 仅保存在内存</string>
+    <string name="todo_edit_storage_hint">数据保存到本地 Room，保存后列表会自动刷新。</string>
     <string name="todo_action_save">保存</string>
     <string name="todo_action_cancel">取消</string>
-    <string name="todo_missing_item">演示待办不存在，请返回列表重新创建</string>
+    <string name="todo_saving">保存中…</string>
+    <string name="todo_saved">待办已保存</string>
+    <string name="todo_deleted">待办已删除</string>
+    <string name="todo_completed">已标记为完成</string>
+    <string name="todo_reopened">已标记为未完成</string>
+    <string name="todo_operation_failed">操作失败，请稍后重试</string>
+    <string name="todo_delete_title">删除这条待办？</string>
+    <string name="todo_delete_message">「%1$s」删除后无法恢复。</string>
+    <string name="todo_missing_item">待办不存在，请返回列表重新创建</string>
 
     <string name="todo_settings_title">设置</string>
-    <string name="todo_settings_intro">调整界面主题，查看桌面小组件使用方式。待办页面当前为 UI 空壳，不读写 Room。</string>
+    <string name="todo_settings_intro">调整界面主题，查看桌面小组件使用方式。待办数据保存在本地 Room。</string>
     <string name="todo_settings_theme_title">外观主题</string>
     <string name="todo_settings_theme_summary">主题会同步应用到应用界面和桌面微件。</string>
     <string name="todo_settings_widget_title">桌面小组件</string>
-    <string name="todo_settings_widget_body">1. 长按桌面空白处，进入「小组件」。\n2. 选择「拾光笔记 · 微件」，拖到桌面。\n3. 微件展示拾光笔记摘要；待办 UI 暂不写入微件。\n4. 修改主题后，可刷新微件查看新的浅色/深色色板。</string>
+    <string name="todo_settings_widget_body">1. 长按桌面空白处，进入「小组件」。\n2. 选择「拾光笔记 · 微件」，拖到桌面。\n3. 微件展示拾光笔记摘要；待办数据暂不写入微件。\n4. 修改主题后，可刷新微件查看新的浅色/深色色板。</string>
     <string name="todo_settings_widget_refresh">刷新桌面组件</string>
     <string name="todo_settings_widget_refreshed">已请求刷新桌面组件</string>
     <string name="todo_settings_notes_title">原有笔记模块</string>
     <string name="todo_settings_notes_body">保留笔记、桌面微件与深度跳转能力，可从设置返回原有笔记列表。</string>
     <string name="todo_settings_open_notes">打开笔记列表</string>
-    <string name="todo_settings_footer">本页面及待办列表为课程 UI 空壳阶段，不接入真实数据。</string>
+    <string name="todo_settings_footer">待办数据保存在本地，不会上传到网络。</string>
 
     <string name="cd_back">返回</string>
     <string name="cd_note">笔记图标</string>

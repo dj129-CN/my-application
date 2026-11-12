@@ -56,15 +56,16 @@
 - `DataResult<T>`：统一封装成功/失败，包含校验失败、未找到、数据库异常，并处理空值
 - 详细说明：[docs/TODO_DATA_LAYER.md](docs/TODO_DATA_LAYER.md)
 
-### 待办 UI 空壳（`:app`，本阶段新增）
+### 待办业务闭环（`:app`，本阶段新增）
 
-- 单 Activity + Navigation：待办列表、新增/编辑、设置三个核心页面
-- 列表页：RecyclerView、悬浮新建按钮、空态占位、完成状态切换
-- 编辑页：标题/备注表单、保存/取消、`todoId` 导航参数传递
-- 设置页：主题切换入口、桌面小组件配置说明、刷新微件、返回原有笔记模块
-- 待办数据仅存放在 Activity 级 ViewModel 内存中，不接入 Room，重启后清空
-- 应用默认进入待办列表；原有笔记、微件、深链功能保留
-- 详细说明：[docs/TODO_UI_SHELL.md](docs/TODO_UI_SHELL.md)
+- 单 Activity + Navigation：列表、新增/编辑、设置三个核心页面
+- 列表页展示 Room 中的真实待办，支持点击编辑、长按删除确认、复选框标记完成
+- 新增/编辑通过 `TodoRepository` 写入 Room，保存后 Room Flow 自动刷新列表
+- 空态、加载进度、操作成功 Toast、目标不存在与数据库异常提示
+- 列表使用 `ListAdapter + DiffUtil + 稳定 id`，统一 180ms 增删改动画；完成状态采用乐观更新
+- 保存中禁用表单防止重复提交；标题为空显示输入错误
+- 设置页保留主题切换、小组件说明、微件刷新和原有笔记入口
+- 详细说明：[docs/TODO_UI.md](docs/TODO_UI.md)
 
 ## 深度链接
 
@@ -207,7 +208,7 @@ Gradle Wrapper 默认使用腾讯镜像下载官方 Gradle 8.7，并用官方 SH
 ├── docs/
 │   ├── TOPIC_REVIEW.md                 # C6 + P1 选题审核材料
 │   ├── TODO_DATA_LAYER.md              # 待办数据层说明
-│   └── TODO_UI_SHELL.md                # 待办 UI 与导航说明
+│   └── TODO_UI.md                      # 待办页面与业务闭环说明
 ├── gradle/libs.versions.toml           # 统一版本目录
 ├── gradle/wrapper/
 ├── build.gradle.kts
@@ -233,7 +234,7 @@ Gradle Wrapper 默认使用腾讯镜像下载官方 Gradle 8.7，并用官方 SH
 ```text
 :app:assembleDebug            BUILD SUCCESSFUL
 :companion:assembleDebug      BUILD SUCCESSFUL
-:app:testDebugUnitTest        9 tests, 0 failures
+:app:testDebugUnitTest        6 tests, 0 failures
 :app:lintDebug                No issues found
 :companion:lintDebug          No issues found
 ```

@@ -1,18 +1,27 @@
 package com.example.noteflow.ui.todo
 
 import android.graphics.Paint
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noteflow.R
+import com.example.noteflow.data.local.TodoEntity
 import com.example.noteflow.databinding.ItemTodoBinding
 
 class TodoAdapter(
-    private val onItemClick: (TodoDemoItem) -> Unit,
-    private val onCheckedChange: (TodoDemoItem, Boolean) -> Unit,
-) : ListAdapter<TodoDemoItem, TodoAdapter.TodoViewHolder>(DIFF_CALLBACK) {
+    private val onItemClick: (TodoEntity) -> Unit,
+    private val onItemLongClick: (TodoEntity) -> Unit,
+    private val onCheckedChange: (TodoEntity, Boolean) -> Unit,
+) : ListAdapter<TodoEntity, TodoAdapter.TodoViewHolder>(DIFF_CALLBACK) {
+
+    init {
+        setHasStableIds(true)
+    }
+
+    override fun getItemId(position: Int): Long = getItem(position).id
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
         val binding = ItemTodoBinding.inflate(
@@ -31,7 +40,7 @@ class TodoAdapter(
         private val binding: ItemTodoBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: TodoDemoItem) {
+        fun bind(item: TodoEntity) {
             binding.todoTitle.text = item.title
             binding.todoContent.text = item.content.ifBlank {
                 binding.root.context.getString(R.string.todo_item_no_content)
@@ -53,15 +62,20 @@ class TodoAdapter(
             }
 
             binding.root.setOnClickListener { onItemClick(item) }
+            binding.root.setOnLongClickListener { view ->
+                view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
+                onItemLongClick(item)
+                true
+            }
         }
     }
 
     private companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TodoDemoItem>() {
-            override fun areItemsTheSame(oldItem: TodoDemoItem, newItem: TodoDemoItem): Boolean =
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TodoEntity>() {
+            override fun areItemsTheSame(oldItem: TodoEntity, newItem: TodoEntity): Boolean =
                 oldItem.id == newItem.id
 
-            override fun areContentsTheSame(oldItem: TodoDemoItem, newItem: TodoDemoItem): Boolean =
+            override fun areContentsTheSame(oldItem: TodoEntity, newItem: TodoEntity): Boolean =
                 oldItem == newItem
         }
     }
