@@ -33,7 +33,7 @@
 - **必做：主屏微件动态刷新**（写入即更新 + WorkManager 周期兜底 + 系统周期更新）
 - **必做：微件深度跳转联动**（列表、最近笔记详情、新建笔记、查看全部使用不同深链）
 - **自选：动态主题切换**（跟随系统 / 浅色 / 深色，主应用与微件同步换色）
-- 签名级 ContentProvider
+- 笔记与待办签名级 ContentProvider
 - WorkManager 手动同步模拟任务
 
 ### 伴生模块（`:companion`）
@@ -66,6 +66,15 @@
 - 保存中禁用表单防止重复提交；标题为空显示输入错误
 - 设置页保留主题切换、小组件说明、微件刷新和原有笔记入口
 - 详细说明：[docs/TODO_UI.md](docs/TODO_UI.md)
+
+### Todo ContentProvider（`:app`，本阶段新增）
+
+- `TodoContentProvider` 暴露待办查询、插入、更新、删除；UI 与跨进程客户端共用同一个 Room 数据源
+- 统一 URI：集合 `content://<authority>/todos`、完成状态过滤 `?completed=true|false`、单条 `/todos/{id}`
+- 自定义签名权限 `${applicationId}.permission.ACCESS_TODOS`，同时限制 Provider 的 read/write
+- 成功写入后同时通知集合 URI 和单条 URI，外部 `ContentObserver` 可监听变化
+- `:todoProbe` 调试进程 + `TodoContentProviderTest` 验证跨进程 CRUD、过滤、通知与权限声明
+- 详细说明：[docs/TODO_PROVIDER.md](docs/TODO_PROVIDER.md)
 
 ## 深度链接
 
@@ -191,10 +200,12 @@ Gradle Wrapper 默认使用腾讯镜像下载官方 Gradle 8.7，并用官方 SH
 │       │   ├── data/work/              # WorkManager 调度与 Worker
 │       │   ├── data/model/             # TodoPriority 等领域模型
 │       │   ├── repository/             # NoteRepository、TodoRepository
-│       │   ├── provider/               # ContentProvider + Contract
+│       │   ├── provider/               # Note/Todo ContentProvider + Contract
 │       │   ├── widget/                 # 主微件、主题化 RemoteViews、伴生广播桥
 │       │   ├── util/                   # 日期、Event、深链、主题偏好、DataResult
 │       │   └── ui/                     # 待办三页、笔记三页与 ViewModel
+│       ├── debug/                      # :todoProbe 跨进程测试服务
+│       ├── androidTest/                # TodoContentProviderTest
 │       └── res/                        # 布局、导航、主题、微件、图标
 ├── companion/                          # 独立伴生应用模块
 │   ├── build.gradle.kts
@@ -208,6 +219,7 @@ Gradle Wrapper 默认使用腾讯镜像下载官方 Gradle 8.7，并用官方 SH
 ├── docs/
 │   ├── TOPIC_REVIEW.md                 # C6 + P1 选题审核材料
 │   ├── TODO_DATA_LAYER.md              # 待办数据层说明
+│   ├── TODO_PROVIDER.md                # Todo ContentProvider 与测试说明
 │   └── TODO_UI.md                      # 待办页面与业务闭环说明
 ├── gradle/libs.versions.toml           # 统一版本目录
 ├── gradle/wrapper/
@@ -233,8 +245,10 @@ Gradle Wrapper 默认使用腾讯镜像下载官方 Gradle 8.7，并用官方 SH
 
 ```text
 :app:assembleDebug            BUILD SUCCESSFUL
+:app:assembleDebugAndroidTest BUILD SUCCESSFUL
 :companion:assembleDebug      BUILD SUCCESSFUL
 :app:testDebugUnitTest        6 tests, 0 failures
+TodoContentProviderTest       2 tests, 0 failures（跨进程）
 :app:lintDebug                No issues found
 :companion:lintDebug          No issues found
 ```

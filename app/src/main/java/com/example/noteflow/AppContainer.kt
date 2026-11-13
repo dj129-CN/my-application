@@ -19,7 +19,7 @@ class AppContainer(context: Context) {
 
     val database: AppDatabase by lazy { AppDatabase.getInstance(appContext) }
 
-    val syncScheduler: NoteSyncScheduler = NoteSyncScheduler(appContext)
+    val syncScheduler: NoteSyncScheduler by lazy { NoteSyncScheduler(appContext) }
 
     val noteRepository: NoteRepository by lazy {
         NoteRepository(database.noteDao()) {

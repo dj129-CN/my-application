@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">拾光笔记</string>
     <string name="provider_label">拾光笔记数据服务</string>
+    <string name="todo_provider_label">拾光待办数据服务</string>
     <string name="widget_name">拾光笔记 · 微件</string>
     <string name="widget_description">展示笔记总数与最近更新的一条笔记</string>
 

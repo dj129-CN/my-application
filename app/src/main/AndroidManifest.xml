@@ -6,6 +6,11 @@
         android:name="${applicationId}.permission.ACCESS_NOTES"
         android:protectionLevel="signature" />
 
+    <!-- Signature permission for external clients of the todo ContentProvider. -->
+    <permission
+        android:name="${applicationId}.permission.ACCESS_TODOS"
+        android:protectionLevel="signature" />
+
     <!--
         The companion app declares this in its own manifest as a receiver guard.
         The main app declares it too so the permission exists before the
@@ -62,6 +67,21 @@
             android:grantUriPermissions="false"
             android:label="@string/provider_label"
             android:permission="${applicationId}.permission.ACCESS_NOTES" />
+
+        <!--
+            Todo IPC surface. Only apps signed with the same certificate can hold
+            the signature permission; the provider itself remains exported so
+            those clients can bind to it.
+        -->
+        <provider
+            android:name=".provider.TodoContentProvider"
+            android:authorities="${applicationId}.todo"
+            android:enabled="true"
+            android:exported="true"
+            android:grantUriPermissions="false"
+            android:label="@string/todo_provider_label"
+            android:readPermission="${applicationId}.permission.ACCESS_TODOS"
+            android:writePermission="${applicationId}.permission.ACCESS_TODOS" />
 
         <!-- Home-screen app widget. The receiver is only targeted by the system. -->
         <receiver
