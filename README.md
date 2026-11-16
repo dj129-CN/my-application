@@ -76,6 +76,15 @@
 - `:todoProbe` 调试进程 + `TodoContentProviderTest` 验证跨进程 CRUD、过滤、通知与权限声明
 - 详细说明：[docs/TODO_PROVIDER.md](docs/TODO_PROVIDER.md)
 
+### 4×1 待办桌面微件（`:app`，本阶段新增）
+
+- 严格使用 RemoteViews 实现：今日待办总数、最近一条标题、刷新按钮
+- 配置 Activity：添加时选择分类（全部 / 已完成 / 未完成），保存后立即生效
+- 初始化时从 Room 读取数据并按分类 + 今日过滤渲染
+- 支持浅色/深色主题跟随应用设置；适配 4×1 尺寸与不同启动器
+- 刷新按钮通过广播触发单实例更新；删除微件时清理对应配置
+- 详细说明：[docs/TODO_WIDGET.md](docs/TODO_WIDGET.md)
+
 ## 深度链接
 
 主应用 Manifest 注册 `noteflow://open`，`MainActivity` 使用 `singleTop` 接收冷启动/热启动 Intent，再交给 `NavController.handleDeepLink()`。
@@ -201,7 +210,7 @@ Gradle Wrapper 默认使用腾讯镜像下载官方 Gradle 8.7，并用官方 SH
 │       │   ├── data/model/             # TodoPriority 等领域模型
 │       │   ├── repository/             # NoteRepository、TodoRepository
 │       │   ├── provider/               # Note/Todo ContentProvider + Contract
-│       │   ├── widget/                 # 主微件、主题化 RemoteViews、伴生广播桥
+│       │   ├── widget/                 # 笔记微件、4×1 待办微件、配置 Activity、Updater
 │       │   ├── util/                   # 日期、Event、深链、主题偏好、DataResult
 │       │   └── ui/                     # 待办三页、笔记三页与 ViewModel
 │       ├── debug/                      # :todoProbe 跨进程测试服务
@@ -220,7 +229,8 @@ Gradle Wrapper 默认使用腾讯镜像下载官方 Gradle 8.7，并用官方 SH
 │   ├── TOPIC_REVIEW.md                 # C6 + P1 选题审核材料
 │   ├── TODO_DATA_LAYER.md              # 待办数据层说明
 │   ├── TODO_PROVIDER.md                # Todo ContentProvider 与测试说明
-│   └── TODO_UI.md                      # 待办页面与业务闭环说明
+│   ├── TODO_UI.md                      # 待办页面与业务闭环说明
+│   └── TODO_WIDGET.md                  # 4×1 待办桌面微件说明
 ├── gradle/libs.versions.toml           # 统一版本目录
 ├── gradle/wrapper/
 ├── build.gradle.kts

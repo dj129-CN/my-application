@@ -96,7 +96,7 @@
     <string name="todo_settings_theme_title">外观主题</string>
     <string name="todo_settings_theme_summary">主题会同步应用到应用界面和桌面微件。</string>
     <string name="todo_settings_widget_title">桌面小组件</string>
-    <string name="todo_settings_widget_body">1. 长按桌面空白处，进入「小组件」。\n2. 选择「拾光笔记 · 微件」，拖到桌面。\n3. 微件展示拾光笔记摘要；待办数据暂不写入微件。\n4. 修改主题后，可刷新微件查看新的浅色/深色色板。</string>
+    <string name="todo_settings_widget_body">1. 长按桌面空白处，进入「小组件」。\n2. 选择「拾光待办 · 微件」或「拾光笔记 · 微件」，拖到桌面。\n3. 待办微件展示今日待办总数与最近一条标题；笔记微件展示笔记摘要。\n4. 修改主题后，可刷新微件查看新的浅色/深色色板。</string>
     <string name="todo_settings_widget_refresh">刷新桌面组件</string>
     <string name="todo_settings_widget_refreshed">已请求刷新桌面组件</string>
     <string name="todo_settings_notes_title">原有笔记模块</string>
@@ -106,4 +106,18 @@
 
     <string name="cd_back">返回</string>
     <string name="cd_note">笔记图标</string>
+
+    <string name="todo_widget_name">拾光待办 · 微件</string>
+    <string name="todo_widget_description">展示今日待办总数与最近一条标题，支持分类筛选</string>
+    <string name="todo_widget_label">今日待办</string>
+    <string name="todo_widget_count_format">%1$d 项</string>
+    <string name="todo_widget_empty">暂无待办</string>
+    <string name="todo_widget_refresh">刷新</string>
+    <string name="todo_widget_config_title">配置待办微件</string>
+    <string name="todo_widget_config_subtitle">选择在微件中显示的待办分类</string>
+    <string name="todo_widget_category_all">全部待办</string>
+    <string name="todo_widget_category_completed">已完成</string>
+    <string name="todo_widget_category_incomplete">未完成</string>
+    <string name="todo_widget_config_save">保存</string>
+    <string name="todo_widget_config_cancel">取消</string>
 </resources>
