@@ -117,6 +117,19 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
+
+        <!--
+            Listens for in-app data-change broadcasts and triggers a full widget
+            refresh through WidgetRefreshManager. Exported=false because only
+            same-package senders use this receiver.
+        -->
+        <receiver
+            android:name=".widget.WidgetDataChangeReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.noteflow.action.WIDGET_DATA_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

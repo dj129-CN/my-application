@@ -3,8 +3,13 @@ package com.example.noteflow
 import android.app.Application
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.noteflow.data.work.WidgetRefreshScheduler
 import com.example.noteflow.util.ThemePreferences
+import com.example.noteflow.widget.NoteWidgetProvider
 import com.example.noteflow.widget.NoteWidgetUpdater
+import com.example.noteflow.widget.TodoWidgetProvider
+import com.example.noteflow.widget.TodoWidgetUpdater
+import com.example.noteflow.widget.WidgetRefreshManager
 
 /**
  * Application composition root. Dependencies are wired once here instead of
@@ -23,7 +28,6 @@ class NoteFlowApp : Application() {
         val mainProcess = isMainProcess()
 
         if (mainProcess) {
-            // Restore the user's light/dark/system choice before any activity starts.
             AppCompatDelegate.setDefaultNightMode(
                 ThemePreferences(this).mode.nightMode,
             )
@@ -32,8 +36,20 @@ class NoteFlowApp : Application() {
         container = AppContainer(this)
 
         if (mainProcess) {
-            container.syncScheduler.scheduleWidgetRefresh()
+            // Register all widget types with the unified refresh manager.
+            WidgetRefreshManager.register(NoteWidgetProvider::class.java) { ctx ->
+                NoteWidgetUpdater.updateAll(ctx)
+            }
+            WidgetRefreshManager.register(TodoWidgetProvider::class.java) { ctx ->
+                TodoWidgetUpdater.updateAll(ctx)
+            }
+
+            // Schedule periodic 30-minute refresh for all registered widgets.
+            WidgetRefreshScheduler.schedule(this)
+
+            // Initial render.
             NoteWidgetUpdater.requestUpdate(this)
+            TodoWidgetUpdater.requestUpdate(this)
         }
     }
 

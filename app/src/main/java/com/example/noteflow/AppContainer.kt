@@ -8,6 +8,8 @@ import com.example.noteflow.repository.NoteRepository
 import com.example.noteflow.repository.TodoRepository
 import com.example.noteflow.widget.CompanionBridge
 import com.example.noteflow.widget.NoteWidgetUpdater
+import com.example.noteflow.widget.TodoWidgetUpdater
+import com.example.noteflow.widget.WidgetDataChangeReceiver
 
 /**
  * Manually managed dependency graph for this app module. The companion app is
@@ -26,10 +28,14 @@ class AppContainer(context: Context) {
             NoteWidgetUpdater.requestUpdate(appContext)
             CompanionBridge.notifyNotesChanged(appContext)
             appContext.contentResolver.notifyChange(NoteContract.CONTENT_URI, null)
+            WidgetDataChangeReceiver.notifyDataChanged(appContext)
         }
     }
 
     val todoRepository: TodoRepository by lazy {
-        TodoRepository(database.todoDao())
+        TodoRepository(database.todoDao(), onDataChanged = {
+            TodoWidgetUpdater.requestUpdate(appContext)
+            WidgetDataChangeReceiver.notifyDataChanged(appContext)
+        })
     }
 }

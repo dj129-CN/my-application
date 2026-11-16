@@ -13,7 +13,9 @@ import kotlinx.coroutines.launch
 
 /**
  * Home-screen 4x1 todo widget entry point. Handles system updates and the
- * refresh broadcast from the widget button.
+ * refresh broadcast from the widget button. Manual refresh goes through
+ * [WidgetRefreshManager] so it shares the same code path as data-change and
+ * periodic refreshes.
  */
 class TodoWidgetProvider : AppWidgetProvider() {
 
@@ -47,7 +49,10 @@ class TodoWidgetProvider : AppWidgetProvider() {
                 val pendingResult = goAsync()
                 CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
                     try {
-                        TodoWidgetUpdater.updateWidget(context, appWidgetId)
+                        WidgetRefreshManager.refreshProvider(
+                            context,
+                            TodoWidgetProvider::class.java,
+                        )
                     } catch (cancellation: CancellationException) {
                         throw cancellation
                     } catch (throwable: Throwable) {

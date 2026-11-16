@@ -25,6 +25,7 @@ import kotlinx.coroutines.withContext
 class TodoRepository(
     private val todoDao: TodoDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val onDataChanged: () -> Unit = {},
 ) {
 
     // --------------------------------------------------------------- observe
@@ -70,7 +71,7 @@ class TodoRepository(
             val id = todoDao.insert(normalized)
             check(id > 0L) { "Insert did not return a valid row id" }
             normalized.copy(id = id)
-        }
+        }.also { if (it is DataResult.Success) onDataChanged() }
     }
 
     suspend fun insertAll(todos: List<TodoEntity>): DataResult<List<Long>> {
@@ -84,6 +85,7 @@ class TodoRepository(
 
         val normalized = todos.map(::normalizeNew)
         return dbCall { todoDao.insertAll(normalized) }
+            .also { if (it is DataResult.Success) onDataChanged() }
     }
 
     // --------------------------------------------------------------- update
@@ -105,7 +107,7 @@ class TodoRepository(
                 throw TodoNotFoundException(normalized.id)
             }
             normalized
-        }
+        }.also { if (it is DataResult.Success) onDataChanged() }
     }
 
     suspend fun updateCompletion(id: Long, completed: Boolean): DataResult<Unit> {
@@ -115,7 +117,7 @@ class TodoRepository(
             if (todoDao.updateCompletion(id, completed) == 0) {
                 throw TodoNotFoundException(id)
             }
-        }
+        }.also { if (it is DataResult.Success) onDataChanged() }
     }
 
     suspend fun updatePriority(id: Long, priority: TodoPriority): DataResult<Unit> {
@@ -125,7 +127,7 @@ class TodoRepository(
             if (todoDao.updatePriority(id, priority) == 0) {
                 throw TodoNotFoundException(id)
             }
-        }
+        }.also { if (it is DataResult.Success) onDataChanged() }
     }
 
     // --------------------------------------------------------------- delete
@@ -138,7 +140,7 @@ class TodoRepository(
             if (todoDao.delete(todo) == 0) {
                 throw TodoNotFoundException(todo.id)
             }
-        }
+        }.also { if (it is DataResult.Success) onDataChanged() }
     }
 
     suspend fun deleteById(id: Long): DataResult<Unit> {
@@ -148,14 +150,16 @@ class TodoRepository(
             if (todoDao.deleteById(id) == 0) {
                 throw TodoNotFoundException(id)
             }
-        }
+        }.also { if (it is DataResult.Success) onDataChanged() }
     }
 
     suspend fun deleteCompleted(): DataResult<Int> =
         dbCall { todoDao.deleteCompleted() }
+            .also { if (it is DataResult.Success) onDataChanged() }
 
     suspend fun deleteAll(): DataResult<Int> =
         dbCall { todoDao.deleteAll() }
+            .also { if (it is DataResult.Success) onDataChanged() }
 
     // ---------------------------------------------------------------- query
 
