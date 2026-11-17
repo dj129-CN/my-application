@@ -8,6 +8,7 @@
         android:id="@+id/todoListFragment"
         android:name="com.example.noteflow.ui.todo.TodoListFragment"
         android:label="@string/todo_list_title">
+        <deepLink app:uri="todo://app/list" />
         <action
             android:id="@+id/action_todoList_to_todoEdit"
             app:destination="@id/todoEditFragment" />
@@ -22,7 +23,10 @@
         android:label="@string/todo_edit_title_new">
         <argument
             android:name="todoId"
-            app:argType="long" />
+            app:argType="long"
+            android:defaultValue="-1L" />
+        <deepLink app:uri="todo://app/detail?todoId={todoId}" />
+        <deepLink app:uri="todo://app/add" />
     </fragment>
 
     <fragment

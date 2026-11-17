@@ -11,7 +11,9 @@ import androidx.core.content.ContextCompat
 import com.example.noteflow.R
 import com.example.noteflow.data.local.AppDatabase
 import com.example.noteflow.data.local.TodoEntity
+import com.example.noteflow.ui.MainActivity
 import com.example.noteflow.util.ThemePreferences
+import com.example.noteflow.util.TodoDeepLinks
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,6 +33,8 @@ object TodoWidgetUpdater {
 
     const val ACTION_REFRESH = "com.example.noteflow.action.TODO_WIDGET_REFRESH"
     private const val REQUEST_REFRESH_BASE = 500
+    private const val REQUEST_LIST_BASE = 600
+    private const val REQUEST_DETAIL_BASE = 700
 
     fun requestUpdate(context: Context) {
         val appContext = context.applicationContext
@@ -145,6 +149,7 @@ object TodoWidgetUpdater {
             views.setTextViewText(R.id.todoWidgetTitle, latest.title)
         }
 
+        // Refresh button → broadcast to provider
         val refreshIntent = Intent(context, TodoWidgetProvider::class.java).apply {
             action = ACTION_REFRESH
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
@@ -157,6 +162,43 @@ object TodoWidgetUpdater {
         )
         views.setOnClickPendingIntent(R.id.todoWidgetRefresh, refreshPendingIntent)
 
+        // Count/label area → open todo list
+        val listPendingIntent = deepLinkPendingIntent(
+            context,
+            TodoDeepLinks.LIST,
+            REQUEST_LIST_BASE + appWidgetId,
+        )
+        views.setOnClickPendingIntent(R.id.todoWidgetCountGroup, listPendingIntent)
+
+        // Title area → open detail (or add if no latest)
+        val detailUri = latest?.let { TodoDeepLinks.detail(it.id) } ?: TodoDeepLinks.ADD
+        val detailPendingIntent = deepLinkPendingIntent(
+            context,
+            detailUri,
+            REQUEST_DETAIL_BASE + appWidgetId,
+        )
+        views.setOnClickPendingIntent(R.id.todoWidgetTitle, detailPendingIntent)
+
         return views
+    }
+
+    private fun deepLinkPendingIntent(
+        context: Context,
+        uri: String,
+        requestCode: Int,
+    ): PendingIntent {
+        val intent = Intent(context, MainActivity::class.java).apply {
+            action = Intent.ACTION_VIEW
+            data = android.net.Uri.parse(uri)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                Intent.FLAG_ACTIVITY_SINGLE_TOP
+        }
+        return PendingIntent.getActivity(
+            context,
+            requestCode,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+        )
     }
 }

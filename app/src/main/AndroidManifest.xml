@@ -52,6 +52,16 @@
                     android:host="open"
                     android:scheme="noteflow" />
             </intent-filter>
+
+            <!-- todo://app/list, /detail?id={id}, /add -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="app"
+                    android:scheme="todo" />
+            </intent-filter>
         </activity>
 
         <!--
