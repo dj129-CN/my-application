@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/quickWidgetRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_widget_light"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/quickWidgetTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/todo_quick_widget_title"
+        android:textColor="@color/widget_light_text_primary"
+        android:textSize="13sp" />
+
+    <!--
+        Nested weights and compound-drawable warnings are suppressed: RemoteViews
+        requires separate ImageView + TextView for dynamic icon theming, and the
+        2x2 widget is simple enough that the performance impact is negligible.
+    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:baselineAligned="false"
+        android:gravity="center"
+        android:orientation="horizontal"
+        tools:ignore="DisableBaselineAlignment">
+
+        <LinearLayout
+            android:id="@+id/quickBtnAdd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:ignore="NestedWeights,UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/quickIconAdd"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:contentDescription="@string/todo_quick_add"
+                android:src="@drawable/ic_todo_quick_add" />
+
+            <TextView
+                android:id="@+id/quickLabelAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/todo_quick_add"
+                android:textColor="@color/widget_light_text_secondary"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/quickBtnList"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:ignore="NestedWeights,UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/quickIconList"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:contentDescription="@string/todo_quick_list"
+                android:src="@drawable/ic_todo_quick_list" />
+
+            <TextView
+                android:id="@+id/quickLabelList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/todo_quick_list"
+                android:textColor="@color/widget_light_text_secondary"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/quickBtnComplete"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:ignore="NestedWeights,UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/quickIconComplete"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:contentDescription="@string/todo_quick_complete_all"
+                android:src="@drawable/ic_todo_quick_complete" />
+
+            <TextView
+                android:id="@+id/quickLabelComplete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/todo_quick_complete_all"
+                android:textColor="@color/widget_light_text_secondary"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

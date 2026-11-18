@@ -8,6 +8,7 @@ import com.example.noteflow.repository.NoteRepository
 import com.example.noteflow.repository.TodoRepository
 import com.example.noteflow.widget.CompanionBridge
 import com.example.noteflow.widget.NoteWidgetUpdater
+import com.example.noteflow.widget.TodoQuickWidgetUpdater
 import com.example.noteflow.widget.TodoWidgetUpdater
 import com.example.noteflow.widget.WidgetDataChangeReceiver
 
@@ -35,6 +36,7 @@ class AppContainer(context: Context) {
     val todoRepository: TodoRepository by lazy {
         TodoRepository(database.todoDao(), onDataChanged = {
             TodoWidgetUpdater.requestUpdate(appContext)
+            TodoQuickWidgetUpdater.requestUpdate(appContext)
             WidgetDataChangeReceiver.notifyDataChanged(appContext)
         })
     }

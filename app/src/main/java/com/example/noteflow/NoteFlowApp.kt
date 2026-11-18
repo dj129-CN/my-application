@@ -7,6 +7,8 @@ import com.example.noteflow.data.work.WidgetRefreshScheduler
 import com.example.noteflow.util.ThemePreferences
 import com.example.noteflow.widget.NoteWidgetProvider
 import com.example.noteflow.widget.NoteWidgetUpdater
+import com.example.noteflow.widget.TodoQuickWidgetProvider
+import com.example.noteflow.widget.TodoQuickWidgetUpdater
 import com.example.noteflow.widget.TodoWidgetProvider
 import com.example.noteflow.widget.TodoWidgetUpdater
 import com.example.noteflow.widget.WidgetRefreshManager
@@ -43,6 +45,9 @@ class NoteFlowApp : Application() {
             WidgetRefreshManager.register(TodoWidgetProvider::class.java) { ctx ->
                 TodoWidgetUpdater.updateAll(ctx)
             }
+            WidgetRefreshManager.register(TodoQuickWidgetProvider::class.java) { ctx ->
+                TodoQuickWidgetUpdater.updateAll(ctx)
+            }
 
             // Schedule periodic 30-minute refresh for all registered widgets.
             WidgetRefreshScheduler.schedule(this)
@@ -50,6 +55,7 @@ class NoteFlowApp : Application() {
             // Initial render.
             NoteWidgetUpdater.requestUpdate(this)
             TodoWidgetUpdater.requestUpdate(this)
+            TodoQuickWidgetUpdater.requestUpdate(this)
         }
     }
 

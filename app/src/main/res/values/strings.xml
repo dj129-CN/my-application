@@ -120,4 +120,11 @@
     <string name="todo_widget_category_incomplete">未完成</string>
     <string name="todo_widget_config_save">保存</string>
     <string name="todo_widget_config_cancel">取消</string>
+
+    <string name="todo_quick_widget_name">拾光待办 · 快捷操作</string>
+    <string name="todo_quick_widget_description">快速新增、查看今日待办、一键全部完成</string>
+    <string name="todo_quick_widget_title">快捷操作</string>
+    <string name="todo_quick_add">新增</string>
+    <string name="todo_quick_list">今日</string>
+    <string name="todo_quick_complete_all">全部完成</string>
 </resources>
